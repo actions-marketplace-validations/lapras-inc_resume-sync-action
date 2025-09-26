@@ -6,11 +6,13 @@ import { collectSyncResultsStep } from "./steps/collectSyncResultsStep";
 import { deleteExperiencesStep } from "./steps/deleteExperiencesStep";
 import { getCurrentStateStep } from "./steps/getCurrentStateStep";
 import { processJobSummaryStep } from "./steps/processJobSummaryStep";
+import { processTechSkillStep } from "./steps/processTechSkillStep";
 import { processWantToDoStep } from "./steps/processWantToDoStep";
 import { rollbackStep } from "./steps/rollbackStep";
 import { successStep } from "./steps/successStep";
 import { syncExperiencesStep } from "./steps/syncExperiencesStep";
 import { updateJobSummaryStep } from "./steps/updateJobSummaryStep";
+import { updateTechSkillStep } from "./steps/updateTechSkillStep";
 import { updateWantToDoStep } from "./steps/updateWantToDoStep";
 
 /**
@@ -28,18 +30,25 @@ export const syncWorkflow = createWorkflow({
   }),
 })
   // 初期処理を実行
-  .parallel([getCurrentStateStep, experienceWorkflow, processJobSummaryStep, processWantToDoStep])
+  .parallel([
+    getCurrentStateStep,
+    experienceWorkflow,
+    processJobSummaryStep,
+    processWantToDoStep,
+    processTechSkillStep,
+  ])
   // データをmapping
   .map(async ({ inputData }) => ({
     originalState: inputData["get-current-state"].originalState,
     experienceParams: inputData["experience-workflow"].experienceParams,
     jobSummary: inputData["process-job-summary"].jobSummary,
     wantToDo: inputData["process-want-to-do"].wantToDo,
+    techSkillParams: inputData["process-tech-skill"].techSkillParams,
   }))
   // 既存の職歴を削除
   .then(deleteExperiencesStep)
   // 新しいデータを同期
-  .parallel([syncExperiencesStep, updateJobSummaryStep, updateWantToDoStep])
+  .parallel([syncExperiencesStep, updateJobSummaryStep, updateWantToDoStep, updateTechSkillStep])
   // 同期結果を収集
   .then(collectSyncResultsStep)
   // 条件分岐: 成功時は成功処理、失敗時はロールバック

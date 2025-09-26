@@ -22,6 +22,10 @@ export const collectSyncResultsStep = createStep({
       success: z.boolean(),
       error: z.string().optional(),
     }),
+    "update-tech-skill": z.object({
+      success: z.boolean(),
+      error: z.string().optional(),
+    }),
   }),
   outputSchema: z.object({
     success: z.boolean(),

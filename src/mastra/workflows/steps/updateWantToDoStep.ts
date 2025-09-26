@@ -4,6 +4,7 @@ import {
   ExperienceApiParamsListSchema,
   JobSummarySchema,
   LaprasStateSchema,
+  TechSkillApiParamsListSchema,
   WantToDoSchema,
 } from "../../../types";
 import { updateWantToDo as updateWantToDoApi } from "../../../utils/laprasApiClient";
@@ -19,6 +20,7 @@ export const updateWantToDoStep = createStep({
     experienceParams: ExperienceApiParamsListSchema,
     jobSummary: JobSummarySchema,
     wantToDo: WantToDoSchema,
+    techSkillParams: TechSkillApiParamsListSchema,
   }),
   outputSchema: z.object({
     success: z.boolean(),

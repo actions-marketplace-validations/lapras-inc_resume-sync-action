@@ -4,6 +4,7 @@ import {
   ExperienceApiParamsListSchema,
   JobSummarySchema,
   LaprasStateSchema,
+  TechSkillApiParamsListSchema,
   WantToDoSchema,
 } from "../../../types";
 import { deleteAllExperiences } from "../../../utils/laprasApiClient";
@@ -19,12 +20,14 @@ export const deleteExperiencesStep = createStep({
     experienceParams: ExperienceApiParamsListSchema,
     jobSummary: JobSummarySchema,
     wantToDo: WantToDoSchema,
+    techSkillParams: TechSkillApiParamsListSchema,
   }),
   outputSchema: z.object({
     originalState: LaprasStateSchema,
     experienceParams: ExperienceApiParamsListSchema,
     jobSummary: JobSummarySchema,
     wantToDo: WantToDoSchema,
+    techSkillParams: TechSkillApiParamsListSchema,
   }),
   execute: async ({ inputData, mastra }) => {
     const logger = mastra?.getLogger();

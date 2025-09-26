@@ -3,6 +3,7 @@ import { PinoLogger } from "@mastra/loggers";
 import { experienceParamsBuilderAgent } from "./agents/experienceParamsBuilderAgent";
 import { experienceParseAgent } from "./agents/experienceParseAgent";
 import { jobSummaryParseAgent } from "./agents/jobSummaryParseAgent";
+import { techSkillParseAgent } from "./agents/TechSkillParseAgent";
 import { wantToDoParseAgent } from "./agents/wantToDoParseAgent";
 import { syncWorkflow } from "./workflows/syncWorkflow";
 
@@ -15,6 +16,7 @@ export const mastra = new Mastra({
     jobSummaryParseAgent,
     wantToDoParseAgent,
     experienceParamsBuilderAgent,
+    techSkillParseAgent,
   },
   workflows: {
     syncWorkflow,

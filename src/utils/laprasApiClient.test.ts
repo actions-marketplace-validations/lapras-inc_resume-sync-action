@@ -35,7 +35,14 @@ describe("laprasApiClient", () => {
         want_to_do: "test want to do",
       };
 
-      // 3つの並列APIコールをモック
+      const mockTechSkillResponse = {
+        tech_skill_list: [
+          { tech_skill_id: 1, years: 3 },
+          { tech_skill_id: 2, years: 2 },
+        ],
+      };
+
+      // 4つの並列APIコールをモック
       vi.mocked(fetch)
         .mockResolvedValueOnce({
           ok: true,
@@ -51,6 +58,11 @@ describe("laprasApiClient", () => {
           ok: true,
           headers: new Headers({ "content-type": "application/json" }),
           json: async () => mockWantToDoResponse,
+        } as Response)
+        .mockResolvedValueOnce({
+          ok: true,
+          headers: new Headers({ "content-type": "application/json" }),
+          json: async () => mockTechSkillResponse,
         } as Response);
 
       // Act
@@ -61,8 +73,9 @@ describe("laprasApiClient", () => {
         ...mockExperiencesResponse,
         ...mockJobSummaryResponse,
         ...mockWantToDoResponse,
+        ...mockTechSkillResponse,
       });
-      expect(fetch).toHaveBeenCalledTimes(3);
+      expect(fetch).toHaveBeenCalledTimes(4);
     });
 
     it("APIエラー時に適切なエラーをスローする", async () => {

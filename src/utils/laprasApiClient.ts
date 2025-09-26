@@ -1,6 +1,15 @@
 import { API_CONFIG } from "../config/constants";
 import { getEnvironmentVariable } from "../config/environment";
-import type { Experience, ExperienceApiParams, JobSummary, LaprasState, WantToDo } from "../types";
+import type {
+  Experience,
+  ExperienceApiParams,
+  JobSummary,
+  LaprasState,
+  TechSkill,
+  TechSkillApiParamsList,
+  TechSkillMasterResponse,
+  WantToDo,
+} from "../types";
 
 const BASE_URL = API_CONFIG.LAPRAS_BASE_URL;
 
@@ -171,16 +180,18 @@ const laprasApiClient = new ApiClient({
  * 現在のLAPRAS状態を取得
  */
 export const getCurrentLaprasState = async (): Promise<LaprasState> => {
-  const [experiences, jobSummary, wantToDo] = await Promise.all([
+  const [experiences, jobSummary, wantToDo, techSkills] = await Promise.all([
     laprasApiClient.get<{ experience_list: Experience[] }>("/experiences"),
     laprasApiClient.get<{ job_summary: string }>("/job_summary"),
     laprasApiClient.get<{ want_to_do: string }>("/want_to_do"),
+    laprasApiClient.get<{ tech_skill_list: TechSkill[] }>("/tech_skill"),
   ]);
 
   return {
     ...experiences,
     ...jobSummary,
     ...wantToDo,
+    ...techSkills,
   };
 };
 
@@ -232,6 +243,20 @@ export const updateWantToDo = async (wantToDo: WantToDo): Promise<void> => {
 };
 
 /**
+ * テックスキルマスタを取得
+ */
+export const getTechSkillMaster = async (): Promise<TechSkillMasterResponse> => {
+  return await laprasApiClient.get<TechSkillMasterResponse>("/tech_skill/master");
+};
+
+/**
+ * テックスキルを更新
+ */
+export const updateTechSkill = async (techSkillParams: TechSkillApiParamsList): Promise<void> => {
+  await laprasApiClient.put("/tech_skill", techSkillParams);
+};
+
+/**
  * LAPRASの状態を完全に更新（ロールバック用）
  */
 export const restoreLaprasState = async (state: LaprasState): Promise<void> => {
@@ -255,9 +280,10 @@ export const restoreLaprasState = async (state: LaprasState): Promise<void> => {
     await createExperience(params);
   }
 
-  // 職務要約と今後のキャリア目標を復元
+  // 職務要約と今後のキャリア目標とテックスキルを復元
   await Promise.all([
     updateJobSummary({ job_summary: state.job_summary }),
     updateWantToDo({ want_to_do: state.want_to_do }),
+    updateTechSkill({ tech_skill_list: state.tech_skill_list }),
   ]);
 };
