@@ -1,6 +1,15 @@
 import { API_CONFIG } from "../config/constants";
 import { getEnvironmentVariable } from "../config/environment";
-import type { Experience, ExperienceApiParams, JobSummary, LaprasState, TechSkill, TechSkillApiParamsList, TechSkillMasterResponse, WantToDo } from "../types";
+import type {
+  Experience,
+  ExperienceApiParams,
+  JobSummary,
+  LaprasState,
+  TechSkill,
+  TechSkillApiParamsList,
+  TechSkillMasterResponse,
+  WantToDo,
+} from "../types";
 
 const BASE_URL = API_CONFIG.LAPRAS_BASE_URL;
 

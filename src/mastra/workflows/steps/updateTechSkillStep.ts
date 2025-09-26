@@ -5,7 +5,7 @@ import {
   JobSummarySchema,
   LaprasStateSchema,
   TechSkillApiParamsListSchema,
-  WantToDoSchema
+  WantToDoSchema,
 } from "../../../types";
 import { updateTechSkill as updateTechSkillApi } from "../../../utils/laprasApiClient";
 
@@ -19,8 +19,8 @@ export const updateTechSkillStep = createStep({
     originalState: LaprasStateSchema,
     experienceParams: ExperienceApiParamsListSchema,
     jobSummary: JobSummarySchema,
-    wantToDo: WantToDoSchema,  
-    techSkillParams: TechSkillApiParamsListSchema
+    wantToDo: WantToDoSchema,
+    techSkillParams: TechSkillApiParamsListSchema,
   }),
   outputSchema: z.object({
     success: z.boolean(),

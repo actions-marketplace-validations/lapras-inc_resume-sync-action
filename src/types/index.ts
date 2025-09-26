@@ -27,15 +27,17 @@ export const ExperienceSchema = z.object({
 });
 
 export const RawTechSkillSchema = z.object({
-  tech_skills: z.array(z.object({
-    name: z.string(),
-    experience_years: z.number(),
-  })),
+  tech_skills: z.array(
+    z.object({
+      name: z.string(),
+      experience_years: z.number(),
+    }),
+  ),
 });
 
 export const TechSkillSchema = z.object({
   tech_skill_id: z.number(),
-  years: z.number()
+  years: z.number(),
 });
 
 export const TechSkillApiParamsListSchema = z.object({
@@ -43,10 +45,12 @@ export const TechSkillApiParamsListSchema = z.object({
 });
 
 export const TechSkillMasterResponseSchema = z.object({
-  tech_skill_list: z.array(z.object({
-    id: z.number(),
-    name: z.string(),
-  })),
+  tech_skill_list: z.array(
+    z.object({
+      id: z.number(),
+      name: z.string(),
+    }),
+  ),
 });
 
 // 職務経歴書全体のスキーマ

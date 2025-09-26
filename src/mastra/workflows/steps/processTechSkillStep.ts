@@ -1,9 +1,8 @@
 import { createStep } from "@mastra/core/workflows";
 import { z } from "zod";
 import { type RawTechSkill, TechSkillApiParamsListSchema } from "../../../types";
-import { parseTechSkill } from "../../agents/TechSkillParseAgent";
 import { getTechSkillMaster } from "../../../utils/laprasApiClient";
-
+import { parseTechSkill } from "../../agents/TechSkillParseAgent";
 
 const formatName = (name: string) => {
   return name.replace(/\s+/g, "").toLowerCase();
@@ -25,27 +24,33 @@ const getExperienceYearsId = (experienceYears: number): number => {
  */
 const buildParams = async (rawTechSkill: RawTechSkill) => {
   const techSkillMaster = await getTechSkillMaster();
-  
-  const techSkillMasterMap = techSkillMaster.tech_skill_list.reduce((acc, skill) => {
-    acc[formatName(skill.name)] = skill.id;
-    return acc;
-  }, {} as Record<string, number>);
+
+  const techSkillMasterMap = techSkillMaster.tech_skill_list.reduce(
+    (acc, skill) => {
+      acc[formatName(skill.name)] = skill.id;
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
 
   // 生のテックスキルデータをAPI用の形式に変換
-  const techSkills = rawTechSkill.tech_skills.reduce((acc, skill) => {
-    const id = techSkillMasterMap[formatName(skill.name)];
-    // masterに存在しないスキルはスキップ
-    if (!id) {
+  const techSkills = rawTechSkill.tech_skills.reduce(
+    (acc, skill) => {
+      const id = techSkillMasterMap[formatName(skill.name)];
+      // masterに存在しないスキルはスキップ
+      if (!id) {
+        return acc;
+      }
+
+      // API用のパラメータ形式で追加
+      acc.push({
+        tech_skill_id: id,
+        years: getExperienceYearsId(skill.experience_years),
+      });
       return acc;
-    }
-    
-    // API用のパラメータ形式で追加
-    acc.push({
-      tech_skill_id: id,
-      years: getExperienceYearsId(skill.experience_years),
-    });
-    return acc;
-  }, [] as { tech_skill_id: number, years: number }[]);
+    },
+    [] as { tech_skill_id: number; years: number }[],
+  );
 
   return { tech_skill_list: techSkills };
 };
