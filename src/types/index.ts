@@ -26,6 +26,29 @@ export const ExperienceSchema = z.object({
   updated_at: z.string(),
 });
 
+export const RawTechSkillSchema = z.object({
+  tech_skills: z.array(z.object({
+    name: z.string(),
+    experience_years: z.number(),
+  })),
+});
+
+export const TechSkillSchema = z.object({
+  tech_skill_id: z.number(),
+  years: z.number()
+});
+
+export const TechSkillApiParamsListSchema = z.object({
+  tech_skill_list: z.array(TechSkillSchema),
+});
+
+export const TechSkillMasterResponseSchema = z.object({
+  tech_skill_list: z.array(z.object({
+    id: z.number(),
+    name: z.string(),
+  })),
+});
+
 // 職務経歴書全体のスキーマ
 export const ParsedResumeSchema = z.object({
   experience_list: z.array(
@@ -46,6 +69,7 @@ export const LaprasStateSchema = z.object({
   experience_list: z.array(ExperienceSchema),
   want_to_do: z.string(),
   job_summary: z.string(),
+  tech_skill_list: z.array(TechSkillSchema),
 });
 
 // Phase 1: 新しい個別スキーマの定義
@@ -119,3 +143,7 @@ export type ExperienceApiParams = z.infer<typeof ExperienceApiParamsSchema>;
 export type ExperienceApiParamsList = z.infer<typeof ExperienceApiParamsListSchema>;
 export type ValidationResult = z.infer<typeof ValidationResultSchema>;
 export type SyncResult = z.infer<typeof SyncResultSchema>;
+export type RawTechSkill = z.infer<typeof RawTechSkillSchema>;
+export type TechSkill = z.infer<typeof TechSkillSchema>;
+export type TechSkillApiParamsList = z.infer<typeof TechSkillApiParamsListSchema>;
+export type TechSkillMasterResponse = z.infer<typeof TechSkillMasterResponseSchema>;
