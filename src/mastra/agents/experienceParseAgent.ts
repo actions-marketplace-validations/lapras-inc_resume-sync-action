@@ -26,8 +26,8 @@ export const experienceParseAgent = new Agent({
    - is_ongoing: 現在も継続中の場合はtrue
 
 4. **クライアントワーク判定(is_client_work, client_name)**
-   - 受託開発やクライアントワークの場合はis_client_work: true
-   - クライアント企業名が記載されている場合はclient_nameに記載。ない場合は業界・業種名を記載
+   - フリーランスやSESなど所属企業とプロジェクトのクライアントが異なるの場合はis_client_work: trueにしてください。
+   - is_client_work: trueの場合はクライアント企業名や業界・業種名をclient_nameに記載してください。
 
 5. **業務内容(description)**
    - 具体的な業務内容、プロジェクト内容、実績を抽出
