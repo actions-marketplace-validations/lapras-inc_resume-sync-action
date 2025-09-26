@@ -45,22 +45,30 @@ export async function formatState(state: LaprasState): Promise<string> {
   **役割・役職:** ${exp.position_name}${clientInfo}
   **プロジェクト・業務内容:**
   ${descriptionFormatted}`;
-      })
-      .join("\n\n---\n\n");
+    })
+    .join("\n\n---\n\n");
 
-    let techSkills = "";
-    try {
-      const techSkillMaster = await getTechSkillMaster();
-      const techSkillMasterMap = techSkillMaster.tech_skill_list.reduce((acc, skill) => {
+  let techSkills = "";
+  try {
+    const techSkillMaster = await getTechSkillMaster();
+    const techSkillMasterMap = techSkillMaster.tech_skill_list.reduce(
+      (acc, skill) => {
         acc[skill.id] = skill.name;
         return acc;
-      }, {} as Record<number, string>);
+      },
+      {} as Record<number, string>,
+    );
 
-      techSkills = state.tech_skill_list.map((tech) => `- ${techSkillMasterMap[tech.tech_skill_id]} (${TECH_SKILL_EXPERIENCE_YEARS_LABEL_MAP[tech.years]})`).join("\n");
-    } catch (e) {
-      console.error(e);
-      techSkills = "（表示エラーが発生しました）";
-    }
+    techSkills = state.tech_skill_list
+      .map(
+        (tech) =>
+          `- ${techSkillMasterMap[tech.tech_skill_id]} (${TECH_SKILL_EXPERIENCE_YEARS_LABEL_MAP[tech.years]})`,
+      )
+      .join("\n");
+  } catch (e) {
+    console.error(e);
+    techSkills = "（表示エラーが発生しました）";
+  }
 
   return `# LAPRAS Career State
 
