@@ -66,7 +66,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Sync Resume to LAPRAS
-        uses: lapras-inc/resume-sync-action@v0.2.0
+        uses: lapras-inc/resume-sync-action@v0.2.2
         with:
           # 職務経歴書markdownファイルのパス
           resume_path: ./resume.md
