@@ -72,7 +72,7 @@ export function validateExperience(params: ExperienceApiParamsList): ValidationR
 
     // クライアントワークの検証
     if (exp.is_client_work && (!exp.client_company_name || exp.client_company_name.trim() === "")) {
-      errors.push(`${prefix}クライアントワークの場合、クライアント企業名が必須です`);
+      errors.push(`${prefix}クライアントワークの場合、クライアント企業名また業界名が必須です。職務経歴書のクライアントワークの記載を確認してください。`);
     }
 
     // 説明文の長さチェック

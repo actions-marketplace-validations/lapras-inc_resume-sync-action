@@ -115,6 +115,10 @@ jobs:
 
 LLMのAPIキーが設定されていません。`openai_api_key`、`anthropic_api_key`、`GOOGLE_GENERATIVE_AI_API_KEY`のいずれか1つを設定してください。
 
+### Error: "クライアントワークの場合、クライアント企業名また業界名が必須です。職務経歴書のクライアントワークの記載を確認してください。"
+
+LAPRAS側のCareer情報の構造として、クライアントワークの場合は、クライアント企業名また業界名が必須です。職務経歴書のクライアントワークの記載に追加してください。
+
 ## License
 
 MIT License
