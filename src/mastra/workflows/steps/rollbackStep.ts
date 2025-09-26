@@ -40,8 +40,8 @@ export const rollbackStep = createStep({
       message: "Sync failed and rolled back to original state",
       errors: inputData.errors,
       artifacts: {
-        before: formatState(inputData.originalState),
-        after: formatState(inputData.originalState), // ロールバック後は元の状態
+        before: await formatState(inputData.originalState),
+        after: await formatState(inputData.originalState), // ロールバック後は元の状態
       },
     };
   },

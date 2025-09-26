@@ -1,9 +1,19 @@
 import type { LaprasState } from "../../../types";
+import { getTechSkillMaster } from "../../../utils/laprasApiClient";
+
+const TECH_SKILL_EXPERIENCE_YEARS_LABEL_MAP: Record<number, string> = {
+  0: "〜1年",
+  1: "1〜2年",
+  2: "2〜3年",
+  3: "3〜5年",
+  5: "5〜10年",
+  10: "10年以上",
+};
 
 /**
  * LAPRAS状態をフォーマットして可読性の高い文字列に変換
  */
-export function formatState(state: LaprasState): string {
+export async function formatState(state: LaprasState): Promise<string> {
   const experiences = state.experience_list
     .map((exp) => {
       // 期間のフォーマット
@@ -30,13 +40,27 @@ export function formatState(state: LaprasState): string {
         .join("\n");
 
       return `### ${exp.organization_name}
-**期間:** ${period}  
-${positionsList ? `\n**職種:**\n${positionsList}\n` : ""}
-**役割・役職:** ${exp.position_name}${clientInfo}
-**プロジェクト・業務内容:**
-${descriptionFormatted}`;
-    })
-    .join("\n\n---\n\n");
+  **期間:** ${period}  
+  ${positionsList ? `\n**職種:**\n${positionsList}\n` : ""}
+  **役割・役職:** ${exp.position_name}${clientInfo}
+  **プロジェクト・業務内容:**
+  ${descriptionFormatted}`;
+      })
+      .join("\n\n---\n\n");
+
+    let techSkills = "";
+    try {
+      const techSkillMaster = await getTechSkillMaster();
+      const techSkillMasterMap = techSkillMaster.tech_skill_list.reduce((acc, skill) => {
+        acc[skill.id] = skill.name;
+        return acc;
+      }, {} as Record<number, string>);
+
+      techSkills = state.tech_skill_list.map((tech) => `- ${techSkillMasterMap[tech.tech_skill_id]} (${TECH_SKILL_EXPERIENCE_YEARS_LABEL_MAP[tech.years]})`).join("\n");
+    } catch (e) {
+      console.error(e);
+      techSkills = "（表示エラーが発生しました）";
+    }
 
   return `# LAPRAS Career State
 
@@ -48,5 +72,8 @@ ${state.job_summary}
 
 ## 職歴
 ${experiences}
+
+## 経験技術・スキル・資格
+${techSkills}
 `;
 }

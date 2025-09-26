@@ -27,8 +27,8 @@ export const successStep = createStep({
       success: true,
       message: "Successfully synced resume to LAPRAS",
       artifacts: {
-        before: formatState(inputData.originalState),
-        after: formatState(newState),
+        before: await formatState(inputData.originalState),
+        after: await formatState(newState),
       },
     };
   },
