@@ -3,7 +3,7 @@
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/lapras-inc/resume-sync-action?style=flat-square)](https://github.com/lapras-inc/resume-sync-action/releases)
 [![License](https://img.shields.io/github/license/lapras-inc/resume-sync-action?style=flat-square)](LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/lapras-inc/resume-sync-action?style=flat-square)](https://github.com/lapras-inc/resume-sync-action/issues)
-[![GitHub Marketplace](https://img.shields.io/badge/Marketplace-Resume%20Sync%20Action-blue?style=flat-square&logo=github)](https://github.com/marketplace/actions/lapras-resume-sync-action)
+[![GitHub Marketplace](https://img.shields.io/badge/Marketplace-Resume%20Sync%20Action-blue?style=flat-square&logo=github)](https://github.com/marketplace/actions/lapras-resume-sync)
 
 GitHubで管理している職務経歴書を[LAPRASのCareerページ](https://lapras.com/cv)に自動同期するGitHub Actionです。
 
