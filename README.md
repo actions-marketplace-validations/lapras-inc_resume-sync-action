@@ -1,3 +1,9 @@
+> [!CAUTION]
+> 社内の運用方針見直しに伴い、誠に勝手ながら提供を終了させていただくこととなりました。  
+> 提供終了日：**2025年12月15日（月）**   
+> ご利用いただいている皆様には、ご不便おかけいたしますが、今後もより良いサービスの開発・提供に努めてまいりますので、引き続きLAPRASをよろしくお願いします。
+
+
 # LAPRAS Resume Sync Action（β）
 
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/lapras-inc/resume-sync-action?style=flat-square)](https://github.com/lapras-inc/resume-sync-action/releases)

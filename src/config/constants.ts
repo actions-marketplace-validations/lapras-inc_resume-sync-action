@@ -4,7 +4,7 @@
 
 // API設定
 export const API_CONFIG = {
-  LAPRAS_BASE_URL: "https://lapras.com/api/mcp",
+  LAPRAS_BASE_URL: "http://localhost:8000/api/mcp",
   SOURCE_QUERY: "?source=resume-sync-action",
 } as const;
 
